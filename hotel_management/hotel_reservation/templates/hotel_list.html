@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Hotels</h2>
+    <ul>
+        {% for hotel in hotels %}
+            <li>
+                <a href="{% url 'hotel_reservation:reservation_list' hotel.id %}">{{ hotel.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

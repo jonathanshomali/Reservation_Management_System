@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load custom_filters %}
+
+{% block content %}
+    <h2>Reservations for {{ hotel.name }}</h2>
+    <div class="reservation-grid">
+        {% for reservation in reservations %}
+            <div class="reservation-item">
+                <div class="guest-name">{{ reservation.guest_name }}</div>
+                <div class="date-range">{{ reservation.check_in }} - {{ reservation.check_out }} ({{ reservation.check_out|nights:reservation.check_in }} nights)</div>
+                <div class="floor-number">Floor: {{ reservation.floor_number }}</div>
+                <div class="room-number">Room: {{ reservation.room_number }}</div>
+                <form action="{% url 'hotel_reservation:cancel_reservation' hotel.id reservation.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Cancel</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'hotel_reservation:new_reservation' hotel.id %}">New Reservation</a>
+{% endblock %}
